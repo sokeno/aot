@@ -3,11 +3,11 @@
 @import "~font-awesome/css/font-awesome.min.css";
 
 body{
-    font-family: 'Comic Neue', cursive;
+    /* font-family: 'Comic Neue', cursive; */
     /*sokeno$123*/
-    background-image: url("assets/images/background.png");
+    /* background-image: url("assets/images/background.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; */
 }
 main.container{
 	margin-top: 2em;
