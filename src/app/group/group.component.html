@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <h1>{{pageTitle}}</h1>
+    </div>
+    <div class="col-md-6 col-sm-12 text-right">
+      <button class="btn btn-info" type="button" (click)="switchForm=!switchForm">
+        {{ switchForm ? "Groups" : "New group" }}
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div class="row" *ngIf="!switchForm">
+    <div class="col-md--12 col-md-12">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Members count</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let group of groups">
+            <th scope="row"> {{group.id}} </th>
+            <td>{{ group.name | titlecase }}</td>
+            <td> {{ group.memberCount }} </td>
+            <td>
+              <button class="btn btn-sm btn-outline-info">Join</button>
+              &nbsp;
+              <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="switchForm">
+    <div class="col-md-12 col-sm-12">
+      <form class="form-inline" method="post" action="#" (submit)="newGroup()">
+        <div class="form-group col-sm-12 col-md-6">
+          <label for="name" class="sr-only">Name</label>
+          <input type="text" class="form-control" style="width: 100%;" name="name" [(ngModel)]="name"
+            placeholder="Group name"><br>
+
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+      </form>
+      <small class="red">{{errorMessage}}</small>
+    </div>
+  </div>
+
+</div>

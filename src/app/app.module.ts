@@ -10,11 +10,13 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './index/index.component';
+import { GroupComponent } from './group/group.component';
 
 
 const appRoutes: Routes = [
   {path:'sign-in' , component : SignInComponent},
   {path:'sign-up' , component : SignUpComponent},
+  {path : 'group' , component :GroupComponent},
   {path:'',component: IndexComponent , pathMatch: 'full'}
 ]
 
@@ -24,7 +26,8 @@ const appRoutes: Routes = [
     NavbarComponent,
     SignUpComponent,
     SignInComponent,
-    IndexComponent
+    IndexComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,

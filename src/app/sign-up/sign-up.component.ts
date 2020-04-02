@@ -16,10 +16,21 @@ export class SignUpComponent implements OnInit {
 
   password : string = "";
 
+  nameMessage : string = "";
 
-  constructor(private router :Router) { }
+  emailMessage : string = "";
+
+  passwordMessage : string = "";
+
+
+  constructor(public router :Router) { }
 
   ngOnInit(): void {
+  }
+
+
+  register() :void {
+    
   }
 
 }

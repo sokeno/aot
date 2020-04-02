@@ -28,12 +28,8 @@
             <hr>
             <button class="btn btn-outline-primary" [routerLink]="['/']" type="button"  > <i class="fa fa-arrow-left"></i> Go back </button>
 
-            <a class="btn btn-outline-info" [routerLink]="['/sign-in']" *ngIf="router.url !=='/sign-in'">Sign In</a>
-
             &nbsp;
-            &nbsp;
-            &nbsp;
-            <a class="btn btn-outline-primary" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">Sign up</a>
+            <a class="btn btn-outline-success" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">Sign up</a>
   
         </div>
     </div>

@@ -1,7 +1,8 @@
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+<!-- <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-bold" ><a [routerLink]="['/']" routerLinkActive="router-link-active" >AOT Coding test</a></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <!-- <a class="p-2 text-dark" href="#">Contact Us</a> -->
+      <a class="p-2 text-dark" [routerLink]="['/group']" routerLinkActive="router-link-active" >Groups</a>
+      <a  class="p-2 text-dark" href="#">Members</a>
     </nav>
     <a class="btn btn-outline-info" [routerLink]="['/sign-in']" *ngIf="router.url !=='/sign-in'">Sign In</a>
 
@@ -11,4 +12,36 @@
     <a class="btn btn-outline-primary" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">Sign up</a>
 
 
+  </div> -->
+
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" [routerLink]="['/']">AOT Coding test</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active" >Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/group']">Groups</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Members</a>
+      </li>
+
+    </ul>
+    <ul class="navbar-nav navbar-right">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/sign-in']" *ngIf="router.url !=='/sign-in'">Sign In </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">Sign Up</a>
+      </li>
+    </ul>
   </div>
+</nav>

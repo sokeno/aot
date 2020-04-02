@@ -26,7 +26,7 @@
 
 
             <div class="form-group col-md-6 col-sm-12">
-                <button class="btn btn-info" type="button" (click)="loginHuman()">Submit</button>
+                <button class="btn btn-info" type="button" (click)="register()">Submit</button>
             </div>
         </div>
 
@@ -34,13 +34,9 @@
             <hr>
             <button class="btn btn-outline-primary" [routerLink]="['/']" type="button"> <i class="fa fa-arrow-left"></i>
                 Go back </button>
-
+                &nbsp;
             <a class="btn btn-outline-info" [routerLink]="['/sign-in']" *ngIf="router.url !=='/sign-in'">Sign In</a>
 
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <a class="btn btn-outline-primary" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">Sign up</a>
 
         </div>
     </div>
