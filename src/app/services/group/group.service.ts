@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 
 
 import { Injectable } from '@angular/core';
-import { IGroup } from '../shared/Igroup';
+import { IGroup } from '../../shared/Igroup';
 @Injectable({
   providedIn: 'root'
 })
