@@ -1,1 +1,41 @@
-<p>sign-in works!</p>
+<main role="main" class="container">
+    <h2>{{ pageTitle}}</h2>
+    <hr>
+  
+    <div class="container">
+        <div class="col-md-12 p-1">
+          <div class="form-group col-md-6 col-sm-12">
+              <label for="email or phonenumber">Email or phone number</label>
+              <input type="text" name="email" class="form-control" [(ngModel)]="key">
+              <small class="red">{{keyMessage}}</small>
+          </div>
+  
+  
+          <div class="form-group col-md-6 col-sm-12">
+              <label for="email or phonenumber">Password</label>
+              <input type="password" name="password" class="form-control" [(ngModel)]="password">
+              <small class="red"> {{passwordMessage}} </small>
+          </div>
+  
+  
+  
+          <div class="form-group col-md-6 col-sm-12">
+              <button class="btn btn-info" type="button" (click)="loginHuman()">Submit</button>
+          </div>
+        </div>
+  
+        <div class="col-md-12">
+            <hr>
+            <button class="btn btn-outline-primary" [routerLink]="['/']" type="button"  > <i class="fa fa-arrow-left"></i> Go back </button>
+
+            <a class="btn btn-outline-info" [routerLink]="['/sign-in']" *ngIf="router.url !=='/sign-in'">Sign In</a>
+
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <a class="btn btn-outline-primary" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">Sign up</a>
+  
+        </div>
+    </div>
+    
+  </main>
