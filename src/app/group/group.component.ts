@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IGroup } from '../shared/Igroup';
 import { Router } from '@angular/router';
+import  {GroupService} from '../services/group.service'
 
 @Component({
   selector: 'app-group',
@@ -10,38 +11,26 @@ import { Router } from '@angular/router';
 export class GroupComponent implements OnInit {
 
   pageTitle: string = "Groups";
-
   name: string = "";
-
   errorMessage: string = "";
 
   switchForm: boolean = false;
 
-  groups: IGroup[] = [
-    {
-      "id": 3,
-      "name": 'developers',
-      "memberCount": 40
-    },
-    {
-      "id": 4,
-      "name": "Marketing",
-      "memberCount": 20
-    }
-  ];
-  constructor(private router: Router, ) { }
+  groups: IGroup[];
+
+
+  constructor(private router: Router, private groupService :GroupService ) { }
 
   ngOnInit(): void {
+    this.groups= this.groupService.groups;
   }
 
   validateField(): boolean {
-
     if (this.groups.some(group => group.name == this.name)) return false;
-
     return this.name.trim() == "" ? false : true;
   }
 
-  newGroup(): void {
+  addNew(): void{
     if (this.validateField()) {
 
       let obj: IGroup = {
@@ -50,21 +39,35 @@ export class GroupComponent implements OnInit {
         "memberCount": 0
       };
 
+      this.groupService.newGroup(obj);
+
       this.name = "";
 
       this.errorMessage = "Group added successfully";
 
-      setTimeout(()=>{
+      setTimeout(() => {
         this.errorMessage = "";
-      },1000);
+      }, 1000);
 
-      this.groups.unshift(obj);
-
-
-    } else {
+    }else {
       this.errorMessage = "Enter unique name";
     }
-    console.log(this.name);
   }
+
+
+  switchData() :void{
+    if (this.switchData) {
+      this.groups=this.groupService.groups;
+    }
+    this.switchForm=!this.switchForm;
+  }
+
+  removeGroup(id:number):void {
+    if (confirm("Are you sure , you want to delete group")) {
+      this.groupService.deleteGroup(id);
+      this.groups = this.groupService.groups;
+    }
+  }
+
 
 }
