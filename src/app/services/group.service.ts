@@ -24,7 +24,6 @@ export class GroupService {
 
   newGroup(obj:IGroup): void {
     this.groups.unshift(obj);
-    console.log(this.groups);
   }
 
   deleteGroup(id:number): void{
