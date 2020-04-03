@@ -71,7 +71,5 @@ export class GroupService {
       }
       return item
     });
-
-    // console.log(this.groups);
   }
 }

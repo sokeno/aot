@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { UserService } from "../services/user/user.service";
+import { IUser } from "../shared/Iuser";
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -12,6 +13,8 @@ export class SignUpComponent implements OnInit {
 
   username : string = "";
 
+  errors :boolean =false;
+
   email: string = "";
 
   password : string = "";
@@ -22,15 +25,66 @@ export class SignUpComponent implements OnInit {
 
   passwordMessage : string = "";
 
+  infoMessage:string = "";
 
-  constructor(public router :Router) { }
+
+  constructor(public router :Router ,private userSerice:UserService) { }
 
   ngOnInit(): void {
   }
 
+  validateForm():boolean {
+    this.errors =false;
+    if (this.password.trim() == "") {
+      this.passwordMessage = "Enter valid password";
+      this.errors =true;
+    }
+    if (this.email.trim() == "") {
+      this.emailMessage = "Enter valid email.";
+      this.errors =  true;
+    }
+
+    if (this.email.trim() == "") {
+      this.emailMessage = "Enter valid email.";
+      this.errors = true;
+    }
+
+    // if (this.email.trim() !=="") {
+    //   let  validMail = this.userSerice.checkEmail(this.email);
+    //   if (! validMail ) {
+    //     this.emailMessage = "Enter a valid unique email address";
+    //     this.errors = validMail;
+    //   }
+    //   // code...
+    // }
+
+    // if (this.username.trim() !=="") {
+    //   let  validUsername = this.userSerice.checkUsername(this.username);
+    //   if (! validUsername ) {
+    //     this.emailMessage = "Enter a valid unique username";
+    //     this.errors = validUsername;
+    //   }
+    //   // code...
+    // }
+    
+
+    return  this.errors;
+  }
 
   register() :void {
-    
+
+    if (this.validateForm()) {
+      // code...
+      let obj:IUser = {
+        "id":Date.now(),
+        "name":this.username,
+        "email":this.email,
+        "password":this.password
+      }
+      this.userSerice.newUser(obj);
+      console.log(obj);
+      this.infoMessage="Registration successful.";
+    }
   }
 
 }

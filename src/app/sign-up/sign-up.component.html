@@ -3,30 +3,32 @@
 
 <div class="container">
     <div class="col-md-12 p-1">
-
-        <div class="form-group col-md-6 col-sm-12">
-            <label for="username">Username</label>
-            <input type="text" name="username" class="form-control" [(ngModel)]="username">
-            <small class="red">{{nameMessage}}</small>
-        </div>
-        <div class="form-group col-md-6 col-sm-12">
-            <label for="email or phonenumber">Email</label>
-            <input type="text" name="email" class="form-control" [(ngModel)]="email">
-            <small class="red">{{emailMessage}}</small>
-        </div>
-
-
-        <div class="form-group col-md-6 col-sm-12">
-            <label for="email or phonenumber">Password</label>
-            <input type="password" name="password" class="form-control" [(ngModel)]="password">
-            <small class="red"> {{passwordMessage}} </small>
-        </div>
+        <form method="post" action="" (submit)="register()">
+            <div class="form-group col-md-6 col-sm-12">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" [(ngModel)]="username" required minlength="6">
+                <small class="red">{{nameMessage}}</small>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+                <label for="email or phonenumber">Email</label>
+                <input type="email" name="email" class="form-control" [(ngModel)]="email" required>
+                <small class="red">{{emailMessage}}</small>
+            </div>
 
 
+            <div class="form-group col-md-6 col-sm-12">
+                <label for="email or phonenumber">Password</label>
+                <input type="password" name="password" class="form-control" [(ngModel)]="password" required minlength="6">
+                <small class="red"> {{passwordMessage}} </small>
+            </div>
 
-        <div class="form-group col-md-6 col-sm-12">
-            <button class="btn btn-info" type="button" (click)="register()">Submit</button>
-        </div>
+
+
+            <div class="form-group col-md-6 col-sm-12">
+                <button class="btn btn-info" type="submit">Submit</button><br>
+                <small>{{infoMessage}}</small>
+            </div>
+        </form>
     </div>
 
     <div class="col-md-12">
