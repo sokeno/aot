@@ -16,6 +16,10 @@ export class GroupComponent implements OnInit {
 
   switchForm: boolean = false;
 
+  groupId:number ;
+
+  edit: boolean = false;
+
   groups: IGroup[];
 
 
@@ -33,21 +37,49 @@ export class GroupComponent implements OnInit {
   addNew(): void{
     if (this.validateField()) {
 
-      let obj: IGroup = {
-        "id": Date.now(),
-        "name": this.name,
-        "memberCount": 0
-      };
+      if (this.edit) {
+        let id :number = this.groupId;
 
-      this.groupService.newGroup(obj);
+        let name:string = this.name;
 
-      this.name = "";
+        this.groupService.updateGroup(id, name);
 
-      this.errorMessage = "Group added successfully";
+        this.errorMessage = "Update successfully";
 
-      setTimeout(() => {
-        this.errorMessage = "";
-      }, 1000);
+        
+
+        setTimeout(()=>{
+          this.edit =false;
+
+          this.groups = this.groupService.groups;
+
+          this.errorMessage = "";
+
+          this.switchForm=false;
+
+          this.name ="";
+        },1000);
+
+      }else{
+          let obj: IGroup = {
+            "id": Date.now(),
+            "name": this.name,
+            "memberCount": 0,
+            "user_id":1
+          };
+
+          this.groupService.newGroup(obj);
+
+          this.name = "";
+
+          this.errorMessage = "Group added successfully";
+
+          setTimeout(() => {
+            this.errorMessage = "";
+          }, 1000);
+
+      }
+
 
     }else {
       this.errorMessage = "Enter unique name";
@@ -56,9 +88,16 @@ export class GroupComponent implements OnInit {
 
 
   switchData() :void{
+
+    this.edit =false;
+
+    this.pageTitle = "Groups" ;
+    this.name ="";
+
     if (this.switchData) {
       this.groups=this.groupService.groups;
     }
+
     this.switchForm=!this.switchForm;
   }
 
@@ -67,6 +106,21 @@ export class GroupComponent implements OnInit {
       this.groupService.deleteGroup(id);
       this.groups = this.groupService.groups;
     }
+  }
+
+  editGroup(id:number): void{
+    this.edit = true;
+
+    let group = this.groupService.getGroup(id);
+
+    this.name = group.name;
+
+    this.groupId =group.id;
+
+    console.log(group);
+
+    this.pageTitle = "Edit Group";
+    this.switchForm =true;
   }
 
 
