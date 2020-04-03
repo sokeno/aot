@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UserService } from "../services/user/user.service";
+import { IUser } from "../shared/Iuser";
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -9,38 +10,12 @@ export class UserComponent implements OnInit {
 
 	pageTitle : string = "Users";
 
-	users: any[] =
-	[
-		{
-			"id":1,
-			"username":"karis",
-			"email":"peterkariukimutuura@gmail.com"
-		},
-		{
-			"id":2,
-			"username":"steve",
-			"email":"steveokeno@mailinator.com"
-		},
-		{
-			"id":3,
-			"username":"woud",
-			"email":"woud@mailinator.com"
-		},
-		{
-			"id":4,
-			"username":"kevin",
-			"email":"kevin@mailinator.com"
-		},
-		{
-			"id":5,
-			"username":"okwara",
-			"email":"okwara@mailinator.com"
-		}
-	];
+	users: IUser[] ;
 
-  constructor() { }
+  constructor(private userService:UserService) { }
 
   ngOnInit(): void {
+  	this.users = this.userService.users;
   }
 
 }
