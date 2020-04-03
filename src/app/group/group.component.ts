@@ -117,7 +117,7 @@ export class GroupComponent implements OnInit {
 
     this.groupId =group.id;
 
-    console.log(group);
+    // console.log(group);
 
     this.pageTitle = "Edit Group";
     this.switchForm =true;
