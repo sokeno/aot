@@ -12,7 +12,11 @@ export class GroupComponent implements OnInit {
 
   pageTitle: string = "Groups";
 
+  loggedInUserID:number;
+
   name: string = "";
+
+  description: string = "";
 
   errorMessage: string = "";
 
@@ -31,10 +35,11 @@ export class GroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.groups= this.groupService.groups;
+    this.loggedInUserID =this.groupService.userId;
   }
 
   validateField(): boolean {
-    if (this.groups.some(group => group.name == this.name)) return false;
+    if (this.groups.some(group => group.name == this.name) && this.edit ==false) return false;
     return this.name.trim() == "" ? false : true;
   }
 
@@ -46,22 +51,17 @@ export class GroupComponent implements OnInit {
 
         let name:string = this.name;
 
-        this.groupService.updateGroup(id, name);
+        let description: string =this.description;
+
+        this.groupService.updateGroup(id, name, description);
 
         this.errorMessage = "Update successfully";
 
         
 
         setTimeout(()=>{
-          this.edit =false;
-
           this.groups = this.groupService.groups;
-
-          this.errorMessage = "";
-
-          this.switchForm=false;
-
-          this.name ="";
+          this.clearForm();          
         },1000);
 
       }else{
@@ -69,17 +69,15 @@ export class GroupComponent implements OnInit {
             "id": Date.now(),
             "name": this.name,
             "memberCount": 0,
+            "description":this.description,
             "user_id":1
           };
 
           this.groupService.newGroup(obj);
-
-          this.name = "";
-
           this.errorMessage = "Group added successfully";
 
           setTimeout(() => {
-            this.errorMessage = "";
+            this.clearForm();
           }, 1000);
 
       }
@@ -87,6 +85,17 @@ export class GroupComponent implements OnInit {
 
     }else {
       this.errorMessage = "Enter unique name";
+    }
+  }
+
+  clearForm():void{
+    this.pageTitle = "Groups";
+    this.errorMessage ="";
+    this.name ="";
+    this.description = "";
+    if (this.edit) {
+      this.switchForm=false;
+      this.edit =false;
     }
   }
 
@@ -121,6 +130,8 @@ export class GroupComponent implements OnInit {
 
     this.groupId =group.id;
 
+    this.description =group.description;
+
     // console.log(group);
 
     this.pageTitle = "Edit Group";
@@ -128,7 +139,17 @@ export class GroupComponent implements OnInit {
   }
 
   searchGroup(): void{
+    this.groups=this.groupService.groups;
+    if (this.search.trim() === "") {
+      this.groups=this.groupService.groups;
+    }else{
+      this.groups = this.groups.filter((group:IGroup)=>group.name.toLocaleLowerCase().indexOf(this.search)!==-1);
+    }
 
+  }
+
+  joinGroup(id:number):void{
+    console.log(id);
   }
 
 
