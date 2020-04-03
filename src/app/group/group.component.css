@@ -1,0 +1,9 @@
+a#view-members{
+	margin-right: 2em;
+	cursor: pointer;
+}
+
+td#action{
+	display: inline-flex !important;
+	text-align: center;
+}

@@ -3,7 +3,8 @@
 @import "~font-awesome/css/font-awesome.min.css";
 
 body{
-    /* font-family: 'Comic Neue', cursive; */
+    /*font-family: 'Comic Neue', cursive;*/
+    font-family: 'Montserrat', sans-serif;
     /*sokeno$123*/
     /* background-image: url("assets/images/background.png");
     background-repeat: no-repeat;

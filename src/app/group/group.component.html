@@ -9,14 +9,19 @@
       </button>
     </div>
   </div>
-  <hr>
   <div class="row" *ngIf="!switchForm">
+    <div class="col-md-12 col-md-12 form-inline">
+        <input type="text" class="form-control col-md-6 col-sm-12" (keyup)="searchGroup()" [(ngModel)]="search" placeholder="search">
+        <!-- <button type="button" class="btn btn-outline-primary ml-1" (click)="searchGroup()">Search</button> -->
+    </div>
     <div class="col-md-12 col-md-12">
-      <table class="table">
+
+      <table class="table mt-2">
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
+            <th scope="col">Description</th>
             <th scope="col">Members count</th>
             <th scope="col">Action</th>
           </tr>
@@ -25,11 +30,14 @@
           <tr *ngFor="let group of groups">
             <th scope="row"> {{group.id}} </th>
             <td>{{ group.name | titlecase }}</td>
-            <td> {{ group.memberCount }} </td>
-            <td style="display: inline-flex !important;">
-              <button class="btn btn-sm btn-outline-info">Join</button>
+            <td>{{ group.description | titlecase }}</td>
+            <td> {{ group.memberCount }}  <a href="#" title="View members" id="view-members"><i class="fa fa-eye"></i></a> </td>
+            <td id="action">
+              <button *ngIf="group.user_id !== loggedInUserID" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
               &nbsp;
-              <button class="btn btn-sm btn-outline-danger" type="button" (click)="removeGroup(group.id)">Delete</button>
+              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-success" (click)="editGroup(group.id)">Edit</button>
+              &nbsp;
+              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-danger" type="button" (click)="removeGroup(group.id)">Delete</button>
             </td>
           </tr>
           <tr *ngIf="groups.length == 0">
@@ -44,14 +52,21 @@
 
   <div class="row" *ngIf="switchForm">
     <div class="col-md-12 col-sm-12">
+      <!-- <p>Edit</p> -->
       <form class="form-inline" method="post" action="#" (submit)="addNew()">
-        <div class="form-group col-sm-12 col-md-6">
+        <div class="form-group col-sm-12 col-md-4">
           <label for="name" class="sr-only">Name</label>
           <input type="text" class="form-control" style="width: 100%;" name="name" [(ngModel)]="name"
             placeholder="Group name"><br>
 
         </div>
-        <button type="submit" class="btn btn-outline-primary">Submit</button>
+        <div class="form-group col-sm-12 col-md-6">
+          <label for="description" class="sr-only">Description</label>
+          <input type="text" class="form-control" style="width: 100%;" name="description" [(ngModel)]="description"
+            placeholder="Description"><br>
+
+        </div>
+        <button type="submit" class="btn btn-outline-primary">{{ edit ? "Update" : "Submit"}}</button>
       </form>
       <small class="">{{errorMessage}}</small>
     </div>
