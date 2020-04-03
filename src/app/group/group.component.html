@@ -32,12 +32,12 @@
             <td>{{ group.name | titlecase }}</td>
             <td>{{ group.description | titlecase }}</td>
             <td> {{ group.memberCount }}  <a href="#" title="View members" id="view-members"><i class="fa fa-eye"></i></a> </td>
-            <td style="display: inline-flex !important;">
-              <button class="btn btn-sm btn-outline-success" (click)="editGroup(group.id)">Edit</button>
-              &nbsp;
+            <td id="action">
               <button *ngIf="group.user_id !== loggedInUserID" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
               &nbsp;
-              <button class="btn btn-sm btn-outline-danger" type="button" (click)="removeGroup(group.id)">Delete</button>
+              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-success" (click)="editGroup(group.id)">Edit</button>
+              &nbsp;
+              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-danger" type="button" (click)="removeGroup(group.id)">Delete</button>
             </td>
           </tr>
           <tr *ngIf="groups.length == 0">
