@@ -11,8 +11,12 @@ import  {GroupService} from '../services/group/group.service'
 export class GroupComponent implements OnInit {
 
   pageTitle: string = "Groups";
+
   name: string = "";
+
   errorMessage: string = "";
+
+  search:string = "";
 
   switchForm: boolean = false;
 
@@ -121,6 +125,10 @@ export class GroupComponent implements OnInit {
 
     this.pageTitle = "Edit Group";
     this.switchForm =true;
+  }
+
+  searchGroup(): void{
+
   }
 
 

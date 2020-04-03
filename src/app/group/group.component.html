@@ -9,10 +9,14 @@
       </button>
     </div>
   </div>
-  <hr>
   <div class="row" *ngIf="!switchForm">
+    <div class="col-md-12 col-md-12 form-inline">
+        <input type="text" class="form-control col-md-6 col-sm-12" [(ngModel)]="search" placeholder="search">
+        <button type="button" class="btn btn-outline-primary ml-1" (click)="searchGroup()">Search</button>
+    </div>
     <div class="col-md-12 col-md-12">
-      <table class="table">
+
+      <table class="table mt-2">
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
