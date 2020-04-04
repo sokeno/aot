@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
-
-
+import {  HttpClientModule } from '@angular/common/http';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -11,6 +11,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { IndexComponent } from './index/index.component';
 import { GroupComponent } from './group/group.component';
 import { UserComponent } from './user/user.component';
+import { GroupData } from "./shared/group-data";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { UserComponent } from './user/user.component';
   ],
   imports: [
     BrowserModule,
+    InMemoryWebApiModule.forRoot(GroupData),
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule
