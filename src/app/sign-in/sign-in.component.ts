@@ -27,6 +27,6 @@ export class SignInComponent implements OnInit {
 
 
   login(): void{
-    this.loginForm.value;
+    console.log(this.loginForm.value);
   }
 }
