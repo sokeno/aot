@@ -19,7 +19,7 @@ export class GroupService {
 
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>(this.groupsUrl).pipe(
-        tap(data=>console.log(JSON.stringify(data))),
+        tap(data=>console.log(data)),
         catchError(this.handleError)
       );
   }
@@ -32,11 +32,6 @@ export class GroupService {
         tap(data => console.log('createGroup: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
-  }
-
-
-  deleteGroup(id:number): void{
-    this.groups = this.groups.filter(a=>a.id !==id);
   }
 
   getGroup(id:number): Observable<Group>{
@@ -84,5 +79,16 @@ export class GroupService {
       memberCount:0,
       user_id:0
     }
+  }
+
+
+  deleteGroup(id: number): Observable<{}> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.groupsUrl}/${id}`;
+    return this.http.delete<Group>(url, { headers })
+      .pipe(
+        tap(data => console.log('deleteProduct: ' + id)),
+        catchError(this.handleError)
+      );
   }
 }

@@ -37,7 +37,7 @@
               &nbsp;
               <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
               &nbsp;
-              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-danger" type="button" (click)="removeGroup(group.id)">Delete</button>
+              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
             </td>
           </tr>
           <tr *ngIf="groups.length == 0">

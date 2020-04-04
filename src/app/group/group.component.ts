@@ -85,14 +85,13 @@ export class GroupComponent implements OnInit {
         this.edit =false;
       }
       this.infoMessage = "";
+      this.fetchGroups();
     },1000);
   }
 
 
   switchData() :void{
-
     this.edit =false;
-
     this.pageTitle = "Groups" ;
     if (this.switchData) {
       this.fetchGroups();
@@ -100,10 +99,13 @@ export class GroupComponent implements OnInit {
     this.switchForm=!this.switchForm;
   }
 
-  removeGroup(id:number):void {
-    if (confirm("Are you sure , you want to delete group")) {
-      this.groupService.deleteGroup(id);
-      this.groups = this.groupService.groups;
+  deleteGroup(id:number):void {
+    if (confirm("Are you sure you want to delete group")) {
+        this.groupService.deleteGroup(id)
+          .subscribe({
+            next: () => this.fetchGroups(),
+            error: err => this.errorMessage = err
+          });
     }
   }
 
@@ -137,12 +139,14 @@ export class GroupComponent implements OnInit {
   }
 
   searchGroup(): void{
-    this.groups=this.groupService.groups;
-    if (this.search.trim() === "") {
-      this.groups=this.groupService.groups;
-    }else{
-      this.groups = this.groups.filter((group:Group)=>group.name.toLocaleLowerCase().indexOf(this.search)!==-1);
-    }
+    console.log(this.search);
+    
+    // this.groups=this.groupService.groups;
+    // if (this.search.trim() === "") {
+    //   this.groups=this.groupService.groups;
+    // }else{
+    //   this.groups = this.groups.filter((group:Group)=>group.name.toLocaleLowerCase().indexOf(this.search)!==-1);
+    // }
 
   }
 
