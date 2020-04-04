@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl } from  "@angular/forms";
 
 @Component({
   selector: 'app-sign-in',
@@ -11,35 +12,21 @@ export class SignInComponent implements OnInit {
 
   pageTitle: string ="Sign In";
 
-  key:string = "";
-  keyMessage: string = "";
-  passwordMessage : string ="";
+  loginForm: FormGroup;
 
-  password:string ="";
 
   constructor(public router:Router) { }
 
   ngOnInit(): void {
-  }
-
-  validateFields(): boolean{
-    
-    this.keyMessage =  (this.key.trim() == "") ? "Email or phonenumber is required." : "";
-
-    this.passwordMessage = (this.password.trim() == "") ? "Password is required." : "";
-
-    return this.key.trim() !== "" && this.password.trim() !== "" ? true :false;
+    this.loginForm = new FormGroup({
+      name:new FormControl(),
+      email:new FormControl(),
+      password:new FormControl(),
+    });
   }
 
 
-  loginHuman(): void{
-
-    if(this.validateFields()){
-      console.log('Valid')
-    }else{
-      console.log('Invalid')
-    }
-
-    console.log(this.key,this.password);
+  login(): void{
+    this.loginForm.value;
   }
 }

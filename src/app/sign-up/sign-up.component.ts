@@ -34,16 +34,6 @@ export class SignUpComponent implements OnInit {
 
     console.log(this.userForm.value);
 
-    // if (this.validateForm()) {
-    //   let obj:IUser = {
-    //     "id":Date.now(),
-    //     "name":this.username,
-    //     "email":this.email,
-    //     "password":this.password
-    //   }
-    //   this.userSerice.newUser(obj);
-    //   this.infoMessage="Registration successful.";
-    // }
   }
 
 }
