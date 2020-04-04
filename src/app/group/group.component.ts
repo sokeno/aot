@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IGroup } from '../shared/Igroup';
+import { FormGroup, FormControl } from  "@angular/forms";
 import { Router } from '@angular/router';
 import  {GroupService} from '../services/group/group.service'
 
@@ -10,15 +11,13 @@ import  {GroupService} from '../services/group/group.service'
 })
 export class GroupComponent implements OnInit {
 
+  groupForm :FormGroup;
+
   pageTitle: string = "Groups";
 
   loggedInUserID:number;
 
-  name: string = "";
-
-  description: string = "";
-
-  errorMessage: string = "";
+  infoMessage: string = "";
 
   search:string = "";
 
@@ -36,63 +35,50 @@ export class GroupComponent implements OnInit {
   ngOnInit(): void {
     this.groups= this.groupService.groups;
     this.loggedInUserID =this.groupService.userId;
+
+    this.groupForm = new FormGroup({
+      name:new FormControl(),
+      description:new FormControl(),
+    });
   }
 
-  validateField(): boolean {
-    if (this.groups.some(group => group.name == this.name) && this.edit ==false) return false;
-    return this.name.trim() == "" ? false : true;
-  }
+  addGroup(): void{
+    let formValues =this.groupForm.value;
+    if (this.edit) {
+      let id :number = this.groupId;
 
-  addNew(): void{
-    if (this.validateField()) {
+      this.groupService.updateGroup(id, formValues.name, formValues.description);
 
-      if (this.edit) {
-        let id :number = this.groupId;
+      this.infoMessage = "Update successfully";
 
-        let name:string = this.name;
+      setTimeout(()=>{
+        this.groups = this.groupService.groups;
+        this.clearForm();          
+      },1000);
 
-        let description: string =this.description;
+    }else{
 
-        this.groupService.updateGroup(id, name, description);
+        let obj: IGroup = {
+          "id": Date.now(),
+          "name": formValues.name,
+          "memberCount": 0,
+          "description":formValues.description,
+          "user_id":1
+        };
 
-        this.errorMessage = "Update successfully";
+        this.groupService.newGroup(obj);
+        this.infoMessage = "Group added successfully";
 
-        
+        setTimeout(() => {
+          this.clearForm();
+        }, 1000);
 
-        setTimeout(()=>{
-          this.groups = this.groupService.groups;
-          this.clearForm();          
-        },1000);
-
-      }else{
-          let obj: IGroup = {
-            "id": Date.now(),
-            "name": this.name,
-            "memberCount": 0,
-            "description":this.description,
-            "user_id":1
-          };
-
-          this.groupService.newGroup(obj);
-          this.errorMessage = "Group added successfully";
-
-          setTimeout(() => {
-            this.clearForm();
-          }, 1000);
-
-      }
-
-
-    }else {
-      this.errorMessage = "Enter unique name";
     }
+    this.infoMessage = "";
   }
 
   clearForm():void{
     this.pageTitle = "Groups";
-    this.errorMessage ="";
-    this.name ="";
-    this.description = "";
     if (this.edit) {
       this.switchForm=false;
       this.edit =false;
@@ -105,12 +91,9 @@ export class GroupComponent implements OnInit {
     this.edit =false;
 
     this.pageTitle = "Groups" ;
-    this.name ="";
-
     if (this.switchData) {
       this.groups=this.groupService.groups;
     }
-
     this.switchForm=!this.switchForm;
   }
 
@@ -126,13 +109,12 @@ export class GroupComponent implements OnInit {
 
     let group = this.groupService.getGroup(id);
 
-    this.name = group.name;
+    this.groupForm.setValue({
+      name:group.name,
+      description:group.description
+    });
 
     this.groupId =group.id;
-
-    this.description =group.description;
-
-    // console.log(group);
 
     this.pageTitle = "Edit Group";
     this.switchForm =true;
