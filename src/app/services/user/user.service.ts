@@ -1,61 +1,40 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../shared/user';
+import { environment } from '../../../environments/environment';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { Observable ,of,throwError } from 'rxjs';
+import { catchError,tap,map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  users :User[] =
-  [
-  	{
-  		"id":2,
-  		"name":"karis",
-  		"email":"karis@mailinator.com",
-  		"password":"joy"
-  	},
-  	{
-  		"id":3,
-  		"name":"kish",
-  		"email":"kish@mailinator.com",
-  		"password":"kishkaris"
-  	},
-  	{
-  		"id":4,
-  		"name":"mount",
-  		"email":"mount@mailinator.com",
-  		"password":"mount"
-  	},
-  	{
-  		"id":5,
-  		"name":"joy",
-  		"email":"joy@mailinator.com",
-  		"password":"joy"
-  	},
-  	{
-  		"id":6,
-  		"name":"purity",
-  		"email":"purity@mailinator.com",
-  		"password":"joy"
-  	},
-  	{
-  		"id":7,
-  		"name":"kimani",
-  		"email":"kimani@mailinator.com",
-  		"password":"joy"
-  	}
+  url:string = environment.appUrl;
 
-  ];
-  constructor() { }
-
-  checkEmail(email :string): boolean{
-  	return this.users.some(user=>user.email == email);
+  constructor(private http: HttpClient) { 
+    console.log(environment.appUrl);
   }
 
-  checkUsername(username:string ): boolean{
-  	return this.users.some(user=>user.name == username);
+ createUser(user: User): Observable<User> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post<User>(this.url+"auth/signup", user, {headers})
+      .pipe(
+        tap(data => console.log('create user: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
   }
-  newUser(user:User): void{
-  	this.users.unshift(user);
+
+  private handleError(err){
+    let errorMessage:string;
+    if (err.error instanceof ErrorEvent) {
+      errorMessage = `An error occurred: ${err.error.message}`;
+    }else{
+      errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+    }
+    console.error(err);
+    return throwError(errorMessage);
   }
+
 }

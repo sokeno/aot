@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import {  HttpClientModule } from '@angular/common/http';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -25,7 +25,7 @@ import { GroupData } from "./shared/group-data";
   ],
   imports: [
     BrowserModule,
-    InMemoryWebApiModule.forRoot(GroupData),
+    // InMemoryWebApiModule.forRoot(GroupData),
     HttpClientModule,
     AppRoutingModule,
     FormsModule,

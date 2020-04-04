@@ -15,6 +15,10 @@ export class SignUpComponent implements OnInit {
 
   userForm: FormGroup;
 
+  infoMessage:string = "";
+
+  user:User;
+
 
   constructor(public router :Router ,private userSerice:UserService) { }
 
@@ -31,9 +35,26 @@ export class SignUpComponent implements OnInit {
 
 
   register() :void {
+    const u = {...this.user, ...this.userForm.value};
 
-    console.log(this.userForm.value);
+    this.userSerice.createUser(u).subscribe({
+      next:(data)=>this.displayMessage(data),
+      error:err=>this.infoMessage=err
+    });
 
+  }
+
+  displayMessage(data:any): void{
+    if (data.message !==null ) {
+      this.infoMessage =data.message;
+    }
+    if (data.success == true) {
+      this.userForm.reset();
+      setTimeout(()=>{
+        this.infoMessage=="";
+        this.router.navigate(['/sign-in']);
+      },2000);
+    }
   }
 
 }
