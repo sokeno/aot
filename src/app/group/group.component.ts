@@ -74,15 +74,17 @@ export class GroupComponent implements OnInit {
         }, 1000);
 
     }
-    this.infoMessage = "";
+    
   }
 
   clearForm():void{
+    this.groupForm.reset();
     this.pageTitle = "Groups";
     if (this.edit) {
       this.switchForm=false;
       this.edit =false;
     }
+    this.infoMessage = "";
   }
 
 
