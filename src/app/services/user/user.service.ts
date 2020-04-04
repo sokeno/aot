@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IUser } from '../../shared/Iuser';
+import { User } from '../../shared/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  users :IUser[] =
+  users :User[] =
   [
   	{
   		"id":2,
@@ -55,7 +55,7 @@ export class UserService {
   checkUsername(username:string ): boolean{
   	return this.users.some(user=>user.name == username);
   }
-  newUser(user:IUser): void{
+  newUser(user:User): void{
   	this.users.unshift(user);
   }
 }

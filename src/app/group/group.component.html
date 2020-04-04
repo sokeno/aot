@@ -35,7 +35,7 @@
             <td id="action">
               <button *ngIf="group.user_id !== loggedInUserID" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
               &nbsp;
-              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-success" (click)="editGroup(group.id)">Edit</button>
+              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
               &nbsp;
               <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-danger" type="button" (click)="removeGroup(group.id)">Delete</button>
             </td>
@@ -53,7 +53,7 @@
   <div class="row" *ngIf="switchForm">
     <div class="col-md-12 col-sm-12">
       <!-- <p>Edit</p> -->
-      <form novalidate action="" (ngSubmit)="addGroup()" [formGroup]="groupForm">
+      <form novalidate action="" (ngSubmit)="saveGroup()" [formGroup]="groupForm">
         <div class="form-group col-md-6 col-sm-12">
             <label for="name">Name</label>
             <input type="text" 

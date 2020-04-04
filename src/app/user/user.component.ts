@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "../services/user/user.service";
-import { IUser } from "../shared/Iuser";
+import { User } from "../shared/user";
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -10,7 +10,7 @@ export class UserComponent implements OnInit {
 
 	pageTitle : string = "Users";
 
-	users: IUser[] ;
+	users: User[] ;
 
   constructor(private userService:UserService) { }
 

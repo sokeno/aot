@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from "../services/user/user.service";
 import { FormGroup, FormControl } from  "@angular/forms";
 
-import { IUser } from "../shared/Iuser";
+import { User } from "../shared/user";
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',

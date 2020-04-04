@@ -1,7 +1,7 @@
 export interface Group{
-    id:number;
+    id?:number;
     name:string;
-    memberCount:number;
+    memberCount?:number;
     description:string;
-    user_id:number;
+    user_id?:number;
 }

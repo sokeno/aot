@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IGroup } from '../shared/Igroup';
+import { Group } from '../shared/group';
 import { FormGroup, FormControl } from  "@angular/forms";
 import { Router } from '@angular/router';
 import  {GroupService} from '../services/group/group.service'
@@ -19,6 +19,10 @@ export class GroupComponent implements OnInit {
 
   infoMessage: string = "";
 
+  errorMessage:string ="";
+
+  group:Group;
+
   search:string = "";
 
   switchForm: boolean = false;
@@ -27,7 +31,7 @@ export class GroupComponent implements OnInit {
 
   edit: boolean = false;
 
-  groups: IGroup[];
+  groups: Group[] =[];
 
 
   constructor(private router: Router, private groupService :GroupService ) { }
@@ -40,51 +44,48 @@ export class GroupComponent implements OnInit {
       name:new FormControl(),
       description:new FormControl(),
     });
+
+    this.fetchGroups();
   }
 
-  addGroup(): void{
-    let formValues =this.groupForm.value;
+  fetchGroups(): void{
+    this.groupService.getGroups().subscribe({
+      next:groups =>{
+        this.groups = groups;
+      },
+      error:err=>this.errorMessage = err
+    });
+  }
+
+  saveGroup():void{
+    const g ={...this.group, ...this.groupForm.value};
+    console.info("g", g);
     if (this.edit) {
-      let id :number = this.groupId;
-
-      this.groupService.updateGroup(id, formValues.name, formValues.description);
-
-      this.infoMessage = "Update successfully";
-
-      setTimeout(()=>{
-        this.groups = this.groupService.groups;
-        this.clearForm();          
-      },1000);
-
+      // Edit group
+      this.groupService.updateGroup(g).subscribe({
+        next:()=>this.clearForm(),
+        error:err=>this.infoMessage=err
+      })
     }else{
-
-        let obj: IGroup = {
-          "id": Date.now(),
-          "name": formValues.name,
-          "memberCount": 0,
-          "description":formValues.description,
-          "user_id":1
-        };
-
-        this.groupService.newGroup(obj);
-        this.infoMessage = "Group added successfully";
-
-        setTimeout(() => {
-          this.clearForm();
-        }, 1000);
-
+      // Create group
+      this.groupService.createGroup(g).subscribe({
+        next:()=>this.clearForm(),
+        error:err=>this.infoMessage=err
+      })
     }
-    
+
   }
 
   clearForm():void{
-    this.groupForm.reset();
-    this.pageTitle = "Groups";
-    if (this.edit) {
-      this.switchForm=false;
-      this.edit =false;
-    }
-    this.infoMessage = "";
+    setTimeout(()=>{
+      this.groupForm.reset();
+      this.pageTitle = "Groups";
+      if (this.edit) {
+        this.switchForm=false;
+        this.edit =false;
+      }
+      this.infoMessage = "";
+    },1000);
   }
 
 
@@ -94,7 +95,7 @@ export class GroupComponent implements OnInit {
 
     this.pageTitle = "Groups" ;
     if (this.switchData) {
-      this.groups=this.groupService.groups;
+      this.fetchGroups();
     }
     this.switchForm=!this.switchForm;
   }
@@ -106,10 +107,23 @@ export class GroupComponent implements OnInit {
     }
   }
 
-  editGroup(id:number): void{
-    this.edit = true;
 
-    let group = this.groupService.getGroup(id);
+  getGroup(id: number): void {
+    this.groupService.getGroup(id)
+      .subscribe({
+        next: (group: Group) => this.displayGroup(group),
+        error: err => this.errorMessage = err
+      });
+  }
+
+  displayGroup(group:Group): void{
+
+    if (this.groupForm) {
+      this.groupForm.reset();
+    }
+    this.group = group; 
+    
+    this.edit = true;
 
     this.groupForm.setValue({
       name:group.name,
@@ -127,7 +141,7 @@ export class GroupComponent implements OnInit {
     if (this.search.trim() === "") {
       this.groups=this.groupService.groups;
     }else{
-      this.groups = this.groups.filter((group:IGroup)=>group.name.toLocaleLowerCase().indexOf(this.search)!==-1);
+      this.groups = this.groups.filter((group:Group)=>group.name.toLocaleLowerCase().indexOf(this.search)!==-1);
     }
 
   }
