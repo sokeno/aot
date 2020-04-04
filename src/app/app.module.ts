@@ -39,6 +39,6 @@ const appRoutes: Routes = [
     FormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [SignUpComponent]
 })
 export class AppModule { }
