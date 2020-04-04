@@ -3,30 +3,68 @@
 
 <div class="container">
     <div class="col-md-12 p-1">
-        <form method="post" action="" (submit)="register()">
+        <form method="post" novalidate action="" (ngSubmit)="register()" [formGroup]="userForm">
             <div class="form-group col-md-6 col-sm-12">
-                <label for="username">Username</label>
-                <input type="text" name="username" class="form-control" [(ngModel)]="username" required minlength="6">
-                <small class="red">{{nameMessage}}</small>
+                <label for="name">Name</label>
+                <input type="text" 
+                       class="form-control" 
+                       formControlName="name" 
+                       required 
+                       minlength="3"
+                       placeholder="Name (required)" 
+                       [ngClass]="{'is-invalid':(userForm.get('name').touched || userForm.get('name').dirty) && !userForm.get('name').valid}">
+                <span class="invalid-feedback">
+                    <span *ngIf="userForm.get('name').errors?.required">
+                        Please enter your name.
+                    </span>
+                    <span *ngIf="userForm.get('name').errors?.minlength">
+                        Your name must be greater than 3 characters.
+                    </span>
+                </span>
             </div>
             <div class="form-group col-md-6 col-sm-12">
                 <label for="email or phonenumber">Email</label>
-                <input type="email" name="email" class="form-control" [(ngModel)]="email" required>
-                <small class="red">{{emailMessage}}</small>
+                <input type="email" 
+                       class="form-control" 
+                       placeholder="Email (required)" 
+                       formControlName="email" 
+                       required 
+                       email
+                       [ngClass]="{'is-invalid': (userForm.get('email').touched || userForm.get('email').dirty) && !userForm.get('email').valid }">
+                  <span class="invalid-feedback">
+                    <span *ngIf="userForm.get('email').errors?.required">
+                      Please enter your email address.
+                    </span>
+                    <span *ngIf="userForm.get('email').errors?.email">
+                      Please enter a valid email address.
+                    </span>
+                  </span>
             </div>
 
 
             <div class="form-group col-md-6 col-sm-12">
                 <label for="email or phonenumber">Password</label>
-                <input type="password" name="password" class="form-control" [(ngModel)]="password" required minlength="6">
-                <small class="red"> {{passwordMessage}} </small>
+                <input type="password"  
+                       class="form-control" 
+                       formControlName="password" 
+                       placeholder="Password (required)" 
+                       required 
+                       minlength="6" 
+                       [ngClass]="{'is-invalid':(userForm.get('password').touched || userForm.get('password').dirty) && !userForm.get('password').valid}">
+                <span class="invalid-feedback">
+                    <span *ngIf="userForm.get('password').errors?.required">
+                        Please enter a password.
+                    </span>
+                    <span *ngIf="userForm.get('password').errors?.minlength">
+                        Your password must be greater than 6 characters.
+                    </span>
+                </span>
             </div>
 
 
 
             <div class="form-group col-md-6 col-sm-12">
-                <button class="btn btn-info" type="submit">Submit</button><br>
-                <small>{{infoMessage}}</small>
+                <button class="btn btn-info" [disabled]="!userForm.valid" type="submit">Submit</button>
             </div>
         </form>
     </div>
