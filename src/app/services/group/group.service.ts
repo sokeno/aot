@@ -4,18 +4,17 @@ import { Observable ,of,throwError } from 'rxjs';
 import { catchError,tap,map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Group } from '../../shared/group';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
 
-  groups: Group[] =[];
-
-  userId:number = 1;
-
   private groupsUrl ='api/groups';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    console.log(environment.appUrl);
+  }
 
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>(this.groupsUrl).pipe(

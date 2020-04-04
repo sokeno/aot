@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  appUrl:"http://dummyroute.com",
   production: false
 };
 

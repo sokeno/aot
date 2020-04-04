@@ -15,7 +15,7 @@ export class GroupComponent implements OnInit {
 
   pageTitle: string = "Groups";
 
-  loggedInUserID:number;
+  loggedInUserID:number =1;
 
   infoMessage: string = "";
 
@@ -37,9 +37,6 @@ export class GroupComponent implements OnInit {
   constructor(private router: Router, private groupService :GroupService ) { }
 
   ngOnInit(): void {
-    this.groups= this.groupService.groups;
-    this.loggedInUserID =this.groupService.userId;
-
     this.groupForm = new FormGroup({
       name:new FormControl(),
       description:new FormControl(),
@@ -140,7 +137,7 @@ export class GroupComponent implements OnInit {
 
   searchGroup(): void{
     console.log(this.search);
-    
+
     // this.groups=this.groupService.groups;
     // if (this.search.trim() === "") {
     //   this.groups=this.groupService.groups;
