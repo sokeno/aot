@@ -26,14 +26,25 @@ export class UserService {
       );
   }
 
+ loginUser(user: User): Observable<User> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post<User>(this.url+"auth/login", user, {headers})
+      .pipe(
+        tap(data => console.log('token : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
+  // loginUser(user:User)
+
   private handleError(err){
     let errorMessage:string;
     if (err.error instanceof ErrorEvent) {
       errorMessage = `An error occurred: ${err.error.message}`;
     }else{
-      errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+      errorMessage = `Backend returned code ${err.status}: ${err.error.message}`;
     }
-    console.error(err);
     return throwError(errorMessage);
   }
 

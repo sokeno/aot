@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from  "@angular/forms";
+import { UserService } from "../services/user/user.service";
+import { User } from "../shared/user";
 
 @Component({
   selector: 'app-sign-in',
@@ -9,13 +11,15 @@ import { FormGroup, FormControl } from  "@angular/forms";
 })
 export class SignInComponent implements OnInit {
 
+  infoMessage: string= "";
 
   pageTitle: string ="Sign In";
 
   loginForm: FormGroup;
 
+  user:User;
 
-  constructor(public router:Router) { }
+  constructor(public router:Router,private userSerice:UserService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -26,6 +30,17 @@ export class SignInComponent implements OnInit {
 
 
   login(): void{
-    console.log(this.loginForm.value);
+    const u = {...this.user, ...this.loginForm.value};
+    this.userSerice.loginUser(u).subscribe({
+      next:(data)=>this.displayMessage(data),
+      error:err=>console.log(err)
+    })
+  }
+  displayMessage(data :any){
+    if(data.accessToken){
+      localStorage.setItem('h',data.accessToken);
+      this.router.navigate(['/groups']);
+    }
+    // console.log(data)
   }
 }
