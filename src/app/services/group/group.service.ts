@@ -10,23 +10,29 @@ import { environment } from '../../../environments/environment';
 })
 export class GroupService {
 
-  private groupsUrl ='api/groups';
+  groupsUrl:string = environment.appUrl;
+
+   obj:any ={ 
+      'Content-Type': 'application/json' ,
+      'Authorization' : `Bearer ${localStorage.getItem('h')}`
+      };
+
 
   constructor(private http: HttpClient) { 
     console.log(environment.appUrl);
   }
 
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(this.groupsUrl).pipe(
+    const headers = new HttpHeaders(this.obj);
+    return this.http.get<Group[]>(this.groupsUrl+"api/groups",{headers}).pipe(
         tap(data=>console.log(data)),
         catchError(this.handleError)
       );
   }
 
  createGroup(group: Group): Observable<Group> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    group.id = null;
-    return this.http.post<Group>(this.groupsUrl, group, { headers })
+    const headers = new HttpHeaders(this.obj);
+    return this.http.post<Group>(this.groupsUrl + "api/groups", group, { headers })
       .pipe(
         tap(data => console.log('createGroup: ' + JSON.stringify(data))),
         catchError(this.handleError)
@@ -75,8 +81,7 @@ export class GroupService {
       id:0,
       name:null,
       description:null,
-      memberCount:0,
-      user_id:0
+      created_by:0
     }
   }
 
