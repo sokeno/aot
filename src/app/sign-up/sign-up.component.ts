@@ -17,6 +17,8 @@ export class SignUpComponent implements OnInit {
 
   infoMessage:string = "";
 
+  color:string ="text-default";
+
   user:User;
 
 
@@ -35,12 +37,13 @@ export class SignUpComponent implements OnInit {
 
 
   register() :void {
+    this.color ="text-default";
 
     const u = {...this.user, ...this.userForm.value};
 
     this.userSerice.createUser(u).subscribe({
       next:(data)=>this.displayMessage(data),
-      error:err=>this.infoMessage=err
+      error:(err)=>this.displayError(err)
     });
     
   }
@@ -58,5 +61,13 @@ export class SignUpComponent implements OnInit {
       },2000);
     }
   }
+
+
+  displayError(err): void{
+    this.color ="text-danger";
+    let error = err.error.message ? err.error.message : "Server connection , not established";
+    this.infoMessage = error;
+  }
+
 
 }

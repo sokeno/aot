@@ -16,6 +16,7 @@ export class SignInComponent implements OnInit {
   pageTitle: string ="Sign In";
 
   loginForm: FormGroup;
+  color:string ="text-default";
 
   user:User;
 
@@ -30,13 +31,23 @@ export class SignInComponent implements OnInit {
 
 
   login(): void{
+    this.color="text-default";
+    this.infoMessage ="Processing....kindly hold on.";
     const u = {...this.user, ...this.loginForm.value};
     this.userSerice.loginUser(u).subscribe({
       next:(data)=>this.displayMessage(data),
-      error:err=>console.log(err)
+      error:(err)=>this.displayError(err)
     })
   }
+
+  displayError(err): void{
+    this.color ="text-danger";
+    let error = err.error.message ? err.error.message : "Server connection , not established";
+    this.infoMessage = error;
+  }
+
   displayMessage(data :any){
+
     if(data.accessToken){
       localStorage.setItem('h',data.accessToken);
       if (this.userSerice.loggedIn()) {

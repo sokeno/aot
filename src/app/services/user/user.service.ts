@@ -39,10 +39,7 @@ export class UserService {
 
 
  createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.url+"auth/signup", user)
-      .pipe(
-        tap(data => console.log('create user: ' + JSON.stringify(data)))
-      );
+    return this.http.post<User>(this.url+"auth/signup", user);
   }
 
  loginUser(user: User): Observable<User> {
