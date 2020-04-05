@@ -28,8 +28,10 @@ export class GroupComponent implements OnInit {
 
   search:string = "";
 
-  user: User =  {"id":1,"name":"karis","email":"karis@mailinator.com","imageUrl":null,"emailVerified":false};
+  user: User;
 
+  joinMessage: string ="";
+  joinMessageInfo:boolean = false;
 
   switchForm: boolean = false;
 
@@ -45,7 +47,7 @@ export class GroupComponent implements OnInit {
     private groupService :GroupService,
     private userService:UserService ) { 
     this.groups = [];
-    this.fetchGroups();
+    // this.fetchGroups();
   }
 
   // ngOnInit(): void {
@@ -68,11 +70,14 @@ export class GroupComponent implements OnInit {
     });
     const resolvedData:Group[] = this.route.snapshot.data['resolvedData'];
     if (resolvedData) {
+      this.userService.getUser();
       if (localStorage.getItem('u')) {
         let user = JSON.parse(localStorage.getItem('u'));
         this.user = user;
       }
+
       this.groups =resolvedData;
+      console.log(this.user);
       // this.user =resolvedData.user;
     }
     
@@ -178,19 +183,36 @@ export class GroupComponent implements OnInit {
   }
 
   searchGroup(): void{
-    console.log(this.search);
-
-    // this.groups=this.groupService.groups;
-    // if (this.search.trim() === "") {
-    //   this.groups=this.groupService.groups;
-    // }else{
-    //   this.groups = this.groups.filter((group:Group)=>group.name.toLocaleLowerCase().indexOf(this.search)!==-1);
-    // }
+    // console.log(this.search);
+    if (this.search.trim() === "") {
+      this.fetchGroups();
+    }else{
+      this.groups = this.groups.filter((group:Group)=>group.name.toLocaleLowerCase().indexOf(this.search)!==-1);
+    }
 
   }
 
+  groupMembers(id:number):void{
+    console.log("Members : " ,id)
+  }
+
   joinGroup(id:number):void{
-    console.log(id);
+    
+    let user_id:number = this.user.id;
+    this.groupService.joinGroup(id,user_id).subscribe({
+      next:(data)=>this.displayMessage(data),
+      error:err=>this.infoMessage=err
+    });;
+    console.log("Join : ",id);
+    this.joinMessage="You have successfully joined the group";
+    this.joinMessageInfo =true;
+    setTimeout(()=>{
+      this.joinMessageInfo =false;
+    },1000);
+  }
+
+  displayMessage(message:any):void{
+    console.log(message);
   }
 
 

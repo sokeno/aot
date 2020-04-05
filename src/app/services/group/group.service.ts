@@ -22,6 +22,19 @@ export class GroupService {
   getGroups(): Observable<Group[]> {
     const headers = new HttpHeaders(this.obj);
     return this.http.get<Group[]>(this.groupsUrl+"api/groups",{headers}).pipe(
+        // tap(data=>console.log(data)),
+        catchError(this.handleError)
+      );
+  }
+
+  joinGroup(id: number,user_id:number): Observable<Group> {
+    const headers = new HttpHeaders(this.obj);
+
+    const url = this.groupsUrl+`api/groups/join/${id}`;
+
+    // let data = {}
+
+    return this.http.get<Group>(url,{headers}).pipe(
         tap(data=>console.log(data)),
         catchError(this.handleError)
       );
@@ -52,6 +65,7 @@ export class GroupService {
     }
     const headers = new HttpHeaders(this.obj);
     const url = this.groupsUrl+`api/groups/${id}`;
+    
     return this.http.get<Group>(url,{headers})
       .pipe(
         tap(data => console.log('get Group: ' + JSON.stringify(data))),

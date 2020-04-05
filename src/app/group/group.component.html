@@ -26,19 +26,25 @@
           </tr>
         </thead>
         <tbody>
+          <tr scope="row" *ngIf="joinMessageInfo">
+            <td colspan="4" class="text-center">
+              {{joinMessage}}
+            </td>
+          </tr>
           <tr *ngFor="let group of groups">
             <th scope="row"> {{group.id}} </th>
             <td>{{ group.name | titlecase }}</td>
             <td>{{ group.description | titlecase }}</td>
             <td id="action">
-              <button class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
-              <!-- <button *ngIf="group.createdBy !== user.id" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button> -->
+              <!-- <button class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button> -->
+              <button *ngIf="group.createdBy !== user.id" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
               &nbsp;
-              <button class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
-              <!-- <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button> -->
+              <!-- <button class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button> -->
+              <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
               &nbsp;
-              <button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
-              <!-- <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button> -->
+              <!-- <button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button> -->
+              <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-primary" type="button" (click)="groupMembers(group.id)">Members</button>&nbsp;
+              <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
             </td>
           </tr>
           <tr *ngIf="groups.length == 0">
