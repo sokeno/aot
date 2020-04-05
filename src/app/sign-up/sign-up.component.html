@@ -68,7 +68,7 @@
                 <a class="pull-right" [routerLink]="['/sign-in']" *ngIf="router.url !=='/sign-in'">or Sign In</a>
             </div>
             <div class="form-group col-md-6 col-sm-12">
-              <small>{{infoMessage}}</small>
+              <small [class]="color">{{infoMessage}}</small>
             </div>
         </form>
     </div>
