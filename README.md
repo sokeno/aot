@@ -1,6 +1,10 @@
 
 # AotTechnologies
 
+# Running using Docker
+
+Open Terminal and run `docker-compose up`
+
 ## Coding test
 
 - run `npm install`
