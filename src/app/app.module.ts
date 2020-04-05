@@ -12,6 +12,7 @@ import { IndexComponent } from './index/index.component';
 import { GroupComponent } from './group/group.component';
 import { UserComponent } from './user/user.component';
 import { GroupData } from "./shared/group-data";
+import { MemberGroupComponent } from './group/member-group.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { GroupData } from "./shared/group-data";
     SignInComponent,
     IndexComponent,
     GroupComponent,
-    UserComponent
+    UserComponent,
+    MemberGroupComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { IndexComponent } from './index/index.component';
 import { GroupComponent } from './group/group.component';
+import { MemberGroupComponent } from './group/member-group.component';
 import { UserComponent } from './user/user.component';
 
 import { GroupResolver } from './group/group-resolver.service';
@@ -12,6 +13,7 @@ import { GroupResolver } from './group/group-resolver.service';
 const routes: Routes = [
   {path:'sign-in' , component : SignInComponent},
   {path:'sign-up' , component : SignUpComponent},
+  {path: 'group/:id/members', component : MemberGroupComponent},  
   {path : 'groups' , component :GroupComponent,resolve: { resolvedData: GroupResolver }},
   {path:'users' , component : UserComponent},
   {path:'',component: SignUpComponent , pathMatch: 'full'}

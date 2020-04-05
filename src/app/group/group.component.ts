@@ -183,7 +183,6 @@ export class GroupComponent implements OnInit {
   }
 
   searchGroup(): void{
-    // console.log(this.search);
     if (this.search.trim() === "") {
       this.fetchGroups();
     }else{
@@ -202,17 +201,17 @@ export class GroupComponent implements OnInit {
     this.groupService.joinGroup(id,user_id).subscribe({
       next:(data)=>this.displayMessage(data),
       error:err=>this.infoMessage=err
-    });;
-    console.log("Join : ",id);
+    });
+
+    this.displayMessage();
+  }
+
+  displayMessage(message:any = null):void{
     this.joinMessage="You have successfully joined the group";
     this.joinMessageInfo =true;
     setTimeout(()=>{
       this.joinMessageInfo =false;
     },1000);
-  }
-
-  displayMessage(message:any):void{
-    console.log(message);
   }
 
 

@@ -3,6 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable ,of,throwError } from 'rxjs';
 import { catchError,tap,map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { User } from '../../shared/user';
 import { Group , GroupsWithUser } from '../../shared/group';
 import { environment } from '../../../environments/environment';
 @Injectable({
@@ -32,10 +33,18 @@ export class GroupService {
 
     const url = this.groupsUrl+`api/groups/join/${id}`;
 
-    // let data = {}
-
     return this.http.get<Group>(url,{headers}).pipe(
         tap(data=>console.log(data)),
+        catchError(this.handleError)
+      );
+  }
+
+  getGroupMembers(id:number): Observable<User[]>{
+    const url = this.groupsUrl+`api/groups/join/${id}`;
+    const headers = new HttpHeaders(this.obj);
+
+    return this.http.get<User[]>(url,{headers}).pipe(
+        tap(data=>console.log('Group Members')),
         catchError(this.handleError)
       );
   }

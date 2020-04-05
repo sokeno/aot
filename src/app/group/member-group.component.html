@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-12">
+      <h1>{{pageTitle}}</h1>
+    </div>
+    <div class="col-md-6 col-sm-12 text-right">
+      <button class="btn btn-info" type="button" [routerLink]="['/groups']">
+        Groups
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-md-12">
+
+      <table class="table mt-2">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <th scope="row"> {{user.id}} </th>
+            <td>{{ user.name | titlecase }}</td>
+            <td>{{ user.email | titlecase }}</td>
+            <td id="action">
+              <button class="btn btn-sm btn-outline-danger" type="button" (click)="removeMember(user.id)">remove</button>
+            </td>
+          </tr>
+          <tr *ngIf="users.length == 0">
+              <td colspan="4" class="text-center">
+                  No records found.
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

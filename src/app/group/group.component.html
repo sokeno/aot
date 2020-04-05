@@ -43,7 +43,7 @@
               <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
               &nbsp;
               <!-- <button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button> -->
-              <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-primary" type="button" (click)="groupMembers(group.id)">Members</button>&nbsp;
+              <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-primary" type="button" [routerLink]="['/group', group.id, 'members']">Members</button>&nbsp;
               <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
             </td>
           </tr>
