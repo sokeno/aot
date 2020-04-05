@@ -42,7 +42,9 @@ export class SignInComponent implements OnInit {
       if (this.userSerice.loggedIn()) {
         // code...
         setTimeout(()=>{
-          this.router.navigate(['/groups']);
+          // this.router.navigate(['/groups']);
+          let url = window.location.origin+"/groups";
+          window.location.href = url;
         },2000);
       }
     }
