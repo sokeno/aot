@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
-import {  HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
+
 // import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,10 @@ import { GroupComponent } from './group/group.component';
 import { UserComponent } from './user/user.component';
 import { GroupData } from "./shared/group-data";
 import { MemberGroupComponent } from './group/member-group.component';
+import {AuthGuard} from './auth.guard';
+import  { TokenIntercepterService } from './services/token-intercepter.service';
+
+
 
 @NgModule({
   declarations: [
@@ -33,7 +38,11 @@ import { MemberGroupComponent } from './group/member-group.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthGuard , {
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenIntercepterService,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

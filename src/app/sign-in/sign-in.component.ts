@@ -39,10 +39,17 @@ export class SignInComponent implements OnInit {
   displayMessage(data :any){
     if(data.accessToken){
       localStorage.setItem('h',data.accessToken);
-      setTimeout(()=>{
-        this.router.navigate(['/groups']);
-      },2000);
+      if (this.userSerice.loggedIn()) {
+        // code...
+        setTimeout(()=>{
+          // this.router.navigate(['/groups']);
+          let url = window.location.origin+"/groups";
+          window.location.href = url;
+        },2000);
+      }
     }
     // console.log(data)
   }
+
+
 }

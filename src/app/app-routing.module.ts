@@ -7,14 +7,23 @@ import { IndexComponent } from './index/index.component';
 import { GroupComponent } from './group/group.component';
 import { MemberGroupComponent } from './group/member-group.component';
 import { UserComponent } from './user/user.component';
-
+import {AuthGuard} from './auth.guard';
 import { GroupResolver } from './group/group-resolver.service';
 
 const routes: Routes = [
   {path:'sign-in' , component : SignInComponent},
   {path:'sign-up' , component : SignUpComponent},
-  {path: 'group/:id/members', component : MemberGroupComponent},  
-  {path : 'groups' , component :GroupComponent,resolve: { resolvedData: GroupResolver }},
+  {
+  	path: 'group/:id/members', 
+  	canActivate:[AuthGuard],
+  	component : MemberGroupComponent
+  },  
+  {
+  	path : 'groups' ,
+  	component :GroupComponent,
+  	canActivate:[AuthGuard],
+  	resolve: { resolvedData: GroupResolver }
+  },
   {path:'users' , component : UserComponent},
   {path:'',component: SignUpComponent , pathMatch: 'full'}
 ];
