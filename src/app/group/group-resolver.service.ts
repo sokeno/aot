@@ -10,13 +10,24 @@ import { UserService } from "../services/user/user.service";
 @Injectable({
   providedIn: 'root'
 })
-export class GroupResolver implements Resolve<GroupsWithUser> {
+export class GroupResolver implements Resolve<Group[]> {
 
   constructor(private groupService:GroupService, private userService: UserService){
 
   }
   resolve(route: ActivatedRouteSnapshot,
-          state: RouterStateSnapshot):Observable<GroupsWithUser>{
+          state: RouterStateSnapshot):Observable<Group[]>{
   	return this.groupService.getGroups();
   }
 }
+
+// export class GroupResolver implements Resolve<GroupsWithUser> {
+
+//   constructor(private groupService:GroupService, private userService: UserService){
+
+//   }
+//   resolve(route: ActivatedRouteSnapshot,
+//           state: RouterStateSnapshot):Observable<GroupsWithUser>{
+//   	return this.groupService.getGroups();
+//   }
+// }

@@ -16,6 +16,6 @@ export interface User{
 }
 
 export interface GroupsWithUser{
-	groups:Group[],
-	user:User
+	groups:Group[];
+	user:User;
 }

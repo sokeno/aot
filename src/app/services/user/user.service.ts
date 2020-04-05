@@ -26,16 +26,23 @@ export class UserService {
 
  currentSignInUser():Observable<User>{
     return this.http.get<User>(this.url+"users/user/me",{headers:this.obj}).pipe(
-        tap(data=>console.log("user service: ",data)),
+        // tap((data)=>{
+        //   console.log("user service: ",data
+        //   )}),
         catchError(this.handleError)
       );
  }
 
  getUser():void {
    this.currentSignInUser().subscribe({
-     next:data=>this.user=data,
+     next:data=>this.storeUser(data),
      error:err=>console.log(err)
    }) 
+ }
+
+ storeUser(data):void{
+   this.user=data;
+   localStorage.setItem('u',JSON.stringify(data))
  }
 
 

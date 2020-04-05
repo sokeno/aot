@@ -28,7 +28,7 @@ export class GroupComponent implements OnInit {
 
   search:string = "";
 
-  user: User ;
+  user: User =  {"id":1,"name":"karis","email":"karis@mailinator.com","imageUrl":null,"emailVerified":false};
 
 
   switchForm: boolean = false;
@@ -48,24 +48,49 @@ export class GroupComponent implements OnInit {
     this.fetchGroups();
   }
 
+  // ngOnInit(): void {
+  //   this.groupForm = new FormGroup({
+  //     name:new FormControl(),
+  //     description:new FormControl(),
+  //   });
+  //   const resolvedData: GroupsWithUser = this.route.snapshot.data['resolvedData'];
+  //   if (resolvedData) {
+  //     this.groups =resolvedData.groups;
+  //     this.user =resolvedData.user;
+  //   }
+    
+  // }
+
   ngOnInit(): void {
     this.groupForm = new FormGroup({
       name:new FormControl(),
       description:new FormControl(),
     });
-    const resolvedData: GroupsWithUser = this.route.snapshot.data['resolvedData'];
+    const resolvedData:Group[] = this.route.snapshot.data['resolvedData'];
     if (resolvedData) {
-      this.groups =resolvedData.groups;
-      this.user =resolvedData.user;
+      if (localStorage.getItem('u')) {
+        let user = JSON.parse(localStorage.getItem('u'));
+        this.user = user;
+      }
+      this.groups =resolvedData;
+      // this.user =resolvedData.user;
     }
     
   }
 
+  // fetchGroups(): void{
+  //   this.groupService.getGroups().subscribe({
+  //     next:data =>{
+  //       this.groups = data.groups;
+  //       this.user=data.user;
+  //     },
+  //     error:err=>this.errorMessage = err
+  //   });
+  // }
   fetchGroups(): void{
     this.groupService.getGroups().subscribe({
       next:data =>{
-        this.groups = data.groups;
-        this.user=data.user;
+        this.groups = data;
       },
       error:err=>this.errorMessage = err
     });

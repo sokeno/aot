@@ -19,21 +19,21 @@ export class GroupService {
     console.log(environment.appUrl);
   }
 
-  // getGroups(): Observable<Group[]> {
-  //   const headers = new HttpHeaders(this.obj);
-  //   return this.http.get<Group[]>(this.groupsUrl+"api/groups",{headers}).pipe(
-  //       tap(data=>console.log(data)),
-  //       catchError(this.handleError)
-  //     );
-  // }
-
-  getGroups(): Observable<GroupsWithUser> {
+  getGroups(): Observable<Group[]> {
     const headers = new HttpHeaders(this.obj);
-    return this.http.get<GroupsWithUser>(this.groupsUrl+"/users/user/me/groups",{headers}).pipe(
+    return this.http.get<Group[]>(this.groupsUrl+"api/groups",{headers}).pipe(
         tap(data=>console.log(data)),
         catchError(this.handleError)
       );
   }
+
+  // getGroups(): Observable<GroupsWithUser> {
+  //   const headers = new HttpHeaders(this.obj);
+  //   return this.http.get<GroupsWithUser>(this.groupsUrl+"/users/user/me/groups",{headers}).pipe(
+  //       tap(data=>console.log(data)),
+  //       catchError(this.handleError)
+  //     );
+  // }
 
 
 
@@ -50,8 +50,9 @@ export class GroupService {
     if (id === 0) {
       return of(this.initializeGroup());
     }
-    const url = `${this.groupsUrl}/${id}`;
-    return this.http.get<Group>(url)
+    const headers = new HttpHeaders(this.obj);
+    const url = this.groupsUrl+`api/groups/${id}`;
+    return this.http.get<Group>(url,{headers})
       .pipe(
         tap(data => console.log('get Group: ' + JSON.stringify(data))),
         catchError(this.handleError)
@@ -60,8 +61,9 @@ export class GroupService {
 
   
   updateGroup(group: Group): Observable<Group> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.groupsUrl}/${group.id}`;
+    const headers = new HttpHeaders(this.obj);
+    const url = this.groupsUrl+`api/groups/${group.id}`;
+
     return this.http.put<Group>(url, group, { headers })
       .pipe(
         tap(() => console.log('updateProduct: ' + group.id)),
@@ -75,10 +77,12 @@ export class GroupService {
   private handleError(err){
     let errorMessage:string;
     if (err.error instanceof ErrorEvent) {
-      errorMessage = `An error occurred: ${err.error.message}`;
+
+      // errorMessage = `An error occurred: ${err.error.message}`;
     }else{
-      errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+      // errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
     }
+    errorMessage = "error occurred.";
     console.error(err);
     return throwError(errorMessage);
   }
@@ -94,8 +98,9 @@ export class GroupService {
 
 
   deleteGroup(id: number): Observable<{}> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.groupsUrl}/${id}`;
+    const headers = new HttpHeaders(this.obj);
+    const url = this.groupsUrl+`api/groups/${id}`;
+    // console.log(url);
     return this.http.delete<Group>(url, { headers })
       .pipe(
         tap(data => console.log('deleteProduct: ' + id)),
