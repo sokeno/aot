@@ -207,7 +207,7 @@ export class GroupComponent implements OnInit {
   }
 
   displayMessage(message:any = null):void{
-    this.joinMessage="You have successfully joined the group";
+    this.joinMessage="Successfully joined the group";
     this.joinMessageInfo =true;
     setTimeout(()=>{
       this.joinMessageInfo =false;
