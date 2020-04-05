@@ -22,6 +22,8 @@ export class GroupComponent implements OnInit {
 
   infoMessage: string = "";
 
+  color: string = "text-default";
+
   errorMessage:string ="";
 
   group:Group;
@@ -30,8 +32,6 @@ export class GroupComponent implements OnInit {
 
   user: User;
 
-  joinMessage: string ="";
-  joinMessageInfo:boolean = false;
 
   switchForm: boolean = false;
 
@@ -50,18 +50,6 @@ export class GroupComponent implements OnInit {
     // this.fetchGroups();
   }
 
-  // ngOnInit(): void {
-  //   this.groupForm = new FormGroup({
-  //     name:new FormControl(),
-  //     description:new FormControl(),
-  //   });
-  //   const resolvedData: GroupsWithUser = this.route.snapshot.data['resolvedData'];
-  //   if (resolvedData) {
-  //     this.groups =resolvedData.groups;
-  //     this.user =resolvedData.user;
-  //   }
-    
-  // }
 
   ngOnInit(): void {
     this.groupForm = new FormGroup({
@@ -82,16 +70,6 @@ export class GroupComponent implements OnInit {
     }
     
   }
-
-  // fetchGroups(): void{
-  //   this.groupService.getGroups().subscribe({
-  //     next:data =>{
-  //       this.groups = data.groups;
-  //       this.user=data.user;
-  //     },
-  //     error:err=>this.errorMessage = err
-  //   });
-  // }
   fetchGroups(): void{
     this.groupService.getGroups().subscribe({
       next:data =>{
@@ -196,21 +174,48 @@ export class GroupComponent implements OnInit {
   }
 
   joinGroup(id:number):void{
-    
+    this.infoMessage = "";
+    this.color="text-default";
     let user_id:number = this.user.id;
     this.groupService.joinGroup(id,user_id).subscribe({
       next:(data)=>this.displayMessage(data),
-      error:err=>this.infoMessage=err
+      error:(err)=>this.displayError(err)
     });
 
-    this.displayMessage();
+    // this.displayMessage();
   }
 
-  displayMessage(message:any = null):void{
-    this.joinMessage="Successfully joined the group";
-    this.joinMessageInfo =true;
+
+  displayError(err): void{
+    this.color ="text-danger";
+    let error;
+    if (err.error ) {
+      if (err.status ==409) {
+        error= err.error;
+      }
+      if (err.status == 200) {
+        error =err.error.text;
+      }
+
+    }else{
+       error = err.error.message ? err.error.message : "Server connection , not established";
+    }
+
+    setTimeout(()=>this.infoMessage="",2000);
+
+    console.log(err);
+    this.infoMessage = error;
+  }
+
+
+  displayMessage(data:any):void{
+    this.color ="text-success";
+    console.log(data);
+    this.infoMessage= data.message;
     setTimeout(()=>{
-      this.joinMessageInfo =false;
+      this.color ="text-default";
+
+      this.infoMessage ="";
     },1000);
   }
 

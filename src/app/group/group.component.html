@@ -26,9 +26,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr scope="row" *ngIf="joinMessageInfo">
-            <td colspan="4" class="text-center">
-              {{joinMessage}}
+          <tr scope="row" *ngIf="infoMessage">
+            <td colspan="4" class="text-center text-info">
+              {{infoMessage}}
             </td>
           </tr>
           <tr *ngFor="let group of groups">
@@ -36,13 +36,10 @@
             <td>{{ group.name | titlecase }}</td>
             <td>{{ group.description | titlecase }}</td>
             <td id="action">
-              <!-- <button class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button> -->
               <button *ngIf="user && group.createdBy !== user.id" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
               &nbsp;
-              <!-- <button class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button> -->
               <button *ngIf="user && group.createdBy == user.id" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
               &nbsp;
-              <!-- <button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button> -->
               <button *ngIf="user && group.createdBy == user.id" class="btn btn-sm btn-outline-primary" type="button" [routerLink]="['/group', group.id, 'members']">Members</button>&nbsp;
               <button *ngIf="user && group.createdBy == user.id" class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
             </td>
