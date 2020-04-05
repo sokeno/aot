@@ -29,11 +29,27 @@ export class MemberGroupComponent implements OnInit {
   }
 
 
-  removeMember(id:number):void{
-  	console.log('remove member:', id);
+  removeMember(user_id:number):void{
+  	
+  	let group_id=+this.route.snapshot.paramMap.get('id');
+  	if (confirm("Are you sure , you want to remove this member?")) {
+  		this.groupService.deleteGroupMember(user_id,group_id).subscribe({
+  			next:(data)=>{
+  				this.getMembers(group_id)
+  			},
+  			error:(err)=>{
+  				this.getMembers(group_id);
+  				// alert('Backend server error')
+  			}
+  		});
+  	}
+
+  	console.log('groupId: ', group_id, "\n userId",user_id);
   }
 
   onGroupMembersRetrieved(data:any):void{
+  	this.users=data.users;
+
   	console.log('Group members : ',data);
   }
 

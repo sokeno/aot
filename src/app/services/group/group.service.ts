@@ -40,7 +40,7 @@ export class GroupService {
   }
 
   getGroupMembers(id:number): Observable<User[]>{
-    const url = this.groupsUrl+`api/groups/join/${id}`;
+    const url = this.groupsUrl+`api/groups/${id}`;
     const headers = new HttpHeaders(this.obj);
 
     return this.http.get<User[]>(url,{headers}).pipe(
@@ -123,10 +123,19 @@ export class GroupService {
   deleteGroup(id: number): Observable<{}> {
     const headers = new HttpHeaders(this.obj);
     const url = this.groupsUrl+`api/groups/${id}`;
-    // console.log(url);
     return this.http.delete<Group>(url, { headers })
       .pipe(
-        tap(data => console.log('deleteProduct: ' + id)),
+        tap(data => console.log('delete Group : ' + id)),
+        catchError(this.handleError)
+      );
+  }
+
+  deleteGroupMember(user_id: number,group_id:number): Observable<{}> {
+    const headers = new HttpHeaders(this.obj);
+    const url = this.groupsUrl+`api/groups/remove/${user_id}/${group_id}`;
+    return this.http.get<{}>(url, { headers })
+      .pipe(
+        tap(data => console.log('delete member: ' + user_id)),
         catchError(this.handleError)
       );
   }
