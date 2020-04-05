@@ -3,7 +3,19 @@
 
 # Running using Docker
 
-Open Terminal and run `docker-compose up`
+On your Ubuntu
+
+sudo service mysql stop
+
+sudo service apache2 stop
+
+# Install Docker
+
+apt-get update
+apt install docker.io
+apt install docker-compose
+
+Open Terminal in the project and run `docker-compose up`
 
 ## Coding test
 
