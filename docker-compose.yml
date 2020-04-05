@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   angular-app:
-    container_name: angular-app
+    container_name: aot-angular
     build:
       context: .
       dockerfile: Dockerfile
