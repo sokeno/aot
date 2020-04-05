@@ -79,4 +79,7 @@ export class UserService {
     return throwError(errorMessage);
   }
 
+  loggedIn():any{
+    return !! localStorage.getItem('h');
+  }
 }

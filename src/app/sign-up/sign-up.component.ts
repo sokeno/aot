@@ -35,16 +35,18 @@ export class SignUpComponent implements OnInit {
 
 
   register() :void {
+
     const u = {...this.user, ...this.userForm.value};
 
     this.userSerice.createUser(u).subscribe({
       next:(data)=>this.displayMessage(data),
       error:err=>this.infoMessage=err
     });
-
+    
   }
 
   displayMessage(data:any): void{
+
     if (data.message !==null ) {
       this.infoMessage =data.message;
     }

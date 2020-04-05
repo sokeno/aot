@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable ,of,throwError } from 'rxjs';
 import { catchError,tap,map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -13,58 +13,37 @@ export class GroupService {
 
   groupsUrl:string = environment.appUrl;
 
-   obj:any =environment.headers;
-
-
   constructor(private http: HttpClient) { 
     console.log(environment.appUrl);
   }
 
   getGroups(): Observable<Group[]> {
-    const headers = new HttpHeaders(this.obj);
-    return this.http.get<Group[]>(this.groupsUrl+"api/groups",{headers}).pipe(
-        // tap(data=>console.log(data)),
-        catchError(this.handleError)
+    return this.http.get<Group[]>(this.groupsUrl+"api/groups").pipe(
+        // tap(data=>console.log(data))
       );
   }
 
   joinGroup(id: number,user_id:number): Observable<Group> {
-    const headers = new HttpHeaders(this.obj);
 
     const url = this.groupsUrl+`api/groups/join/${id}`;
 
-    return this.http.get<Group>(url,{headers}).pipe(
-        tap(data=>console.log(data)),
-        catchError(this.handleError)
+    return this.http.get<Group>(url).pipe(
+        tap(data=>console.log(data))
       );
   }
 
   getGroupMembers(id:number): Observable<User[]>{
     const url = this.groupsUrl+`api/groups/${id}`;
-    const headers = new HttpHeaders(this.obj);
 
-    return this.http.get<User[]>(url,{headers}).pipe(
-        tap(data=>console.log('Group Members')),
-        catchError(this.handleError)
+    return this.http.get<User[]>(url).pipe(
+        tap(data=>console.log('Group Members'))
       );
   }
 
-  // getGroups(): Observable<GroupsWithUser> {
-  //   const headers = new HttpHeaders(this.obj);
-  //   return this.http.get<GroupsWithUser>(this.groupsUrl+"/users/user/me/groups",{headers}).pipe(
-  //       tap(data=>console.log(data)),
-  //       catchError(this.handleError)
-  //     );
-  // }
-
-
-
  createGroup(group: Group): Observable<Group> {
-    const headers = new HttpHeaders(this.obj);
-    return this.http.post<Group>(this.groupsUrl + "api/groups", group, { headers })
+    return this.http.post<Group>(this.groupsUrl + "api/groups", group )
       .pipe(
-        tap(data => console.log('createGroup: ' + JSON.stringify(data))),
-        catchError(this.handleError)
+        tap(data => console.log('createGroup: ' + JSON.stringify(data)))
       );
   }
 
@@ -72,44 +51,25 @@ export class GroupService {
     if (id === 0) {
       return of(this.initializeGroup());
     }
-    const headers = new HttpHeaders(this.obj);
     const url = this.groupsUrl+`api/groups/${id}`;
     
-    return this.http.get<Group>(url,{headers})
+    return this.http.get<Group>(url)
       .pipe(
-        tap(data => console.log('get Group: ' + JSON.stringify(data))),
-        catchError(this.handleError)
+        tap(data => console.log('get Group: ' + JSON.stringify(data)))
       );
   }
 
   
   updateGroup(group: Group): Observable<Group> {
-    const headers = new HttpHeaders(this.obj);
     const url = this.groupsUrl+`api/groups/${group.id}`;
 
-    return this.http.put<Group>(url, group, { headers })
+    return this.http.put<Group>(url, group)
       .pipe(
         tap(() => console.log('updateProduct: ' + group.id)),
         // Return the group upon update
-        map(() => group),
-        catchError(this.handleError)
+        map(() => group)
       );
   }
-
-
-  private handleError(err){
-    let errorMessage:string;
-    if (err.error instanceof ErrorEvent) {
-
-      // errorMessage = `An error occurred: ${err.error.message}`;
-    }else{
-      // errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
-    }
-    errorMessage = "error occurred.";
-    console.error(err);
-    return throwError(errorMessage);
-  }
-
   private initializeGroup():Group {
     return {
       id:0,
@@ -121,22 +81,18 @@ export class GroupService {
 
 
   deleteGroup(id: number): Observable<{}> {
-    const headers = new HttpHeaders(this.obj);
     const url = this.groupsUrl+`api/groups/${id}`;
-    return this.http.delete<Group>(url, { headers })
+    return this.http.delete<Group>(url)
       .pipe(
-        tap(data => console.log('delete Group : ' + id)),
-        catchError(this.handleError)
+        tap(data => console.log('delete Group : ' + id))
       );
   }
 
   deleteGroupMember(user_id: number,group_id:number): Observable<{}> {
-    const headers = new HttpHeaders(this.obj);
     const url = this.groupsUrl+`api/groups/remove/${user_id}/${group_id}`;
-    return this.http.get<{}>(url, { headers })
+    return this.http.get<{}>(url)
       .pipe(
-        tap(data => console.log('delete member: ' + user_id)),
-        catchError(this.handleError)
+        tap(data => console.log('delete member: ' + user_id))
       );
   }
 }
