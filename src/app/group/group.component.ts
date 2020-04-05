@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Group } from '../shared/group';
+import { Group,GroupsWithUser } from '../shared/group';
 import { FormGroup, FormControl } from  "@angular/forms";
-import { Router } from '@angular/router';
-import  {GroupService} from '../services/group/group.service'
+import { Router ,ActivatedRoute } from '@angular/router';
+import  {GroupService} from '../services/group/group.service';
+import { UserService } from "../services/user/user.service";
+import { User } from '../shared/user';
+
 
 @Component({
   selector: 'app-group',
@@ -25,6 +28,9 @@ export class GroupComponent implements OnInit {
 
   search:string = "";
 
+  user: User ;
+
+
   switchForm: boolean = false;
 
   groupId:number ;
@@ -34,21 +40,32 @@ export class GroupComponent implements OnInit {
   groups: Group[] =[];
 
 
-  constructor(private router: Router, private groupService :GroupService ) { }
+  constructor(private router: Router, 
+    private route :ActivatedRoute,
+    private groupService :GroupService,
+    private userService:UserService ) { 
+    this.groups = [];
+    this.fetchGroups();
+  }
 
   ngOnInit(): void {
     this.groupForm = new FormGroup({
       name:new FormControl(),
       description:new FormControl(),
     });
-
-    this.fetchGroups();
+    const resolvedData: GroupsWithUser = this.route.snapshot.data['resolvedData'];
+    if (resolvedData) {
+      this.groups =resolvedData.groups;
+      this.user =resolvedData.user;
+    }
+    
   }
 
   fetchGroups(): void{
     this.groupService.getGroups().subscribe({
-      next:groups =>{
-        this.groups = groups;
+      next:data =>{
+        this.groups = data.groups;
+        this.user=data.user;
       },
       error:err=>this.errorMessage = err
     });

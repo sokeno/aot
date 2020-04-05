@@ -12,9 +12,33 @@ export class UserService {
 
   url:string = environment.appUrl;
 
+  obj:any =environment.headers;
+
+  user:User;
+
+
   constructor(private http: HttpClient) { 
-    console.log(environment.appUrl);
+    this.getUser();
+    // console.log(this.user);
+    // console.log(environment.appUrl);
   }
+
+
+ currentSignInUser():Observable<User>{
+    return this.http.get<User>(this.url+"users/user/me",{headers:this.obj}).pipe(
+        tap(data=>console.log("user service: ",data)),
+        catchError(this.handleError)
+      );
+ }
+
+ getUser():void {
+   this.currentSignInUser().subscribe({
+     next:data=>this.user=data,
+     error:err=>console.log(err)
+   }) 
+ }
+
+
 
  createUser(user: User): Observable<User> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

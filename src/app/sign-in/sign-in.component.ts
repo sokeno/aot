@@ -39,7 +39,9 @@ export class SignInComponent implements OnInit {
   displayMessage(data :any){
     if(data.accessToken){
       localStorage.setItem('h',data.accessToken);
-      this.router.navigate(['/groups']);
+      setTimeout(()=>{
+        this.router.navigate(['/groups']);
+      },2000);
     }
     // console.log(data)
   }

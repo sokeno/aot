@@ -3,7 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable ,of,throwError } from 'rxjs';
 import { catchError,tap,map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Group } from '../../shared/group';
+import { Group , GroupsWithUser } from '../../shared/group';
 import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -12,23 +12,30 @@ export class GroupService {
 
   groupsUrl:string = environment.appUrl;
 
-   obj:any ={ 
-      'Content-Type': 'application/json' ,
-      'Authorization' : `Bearer ${localStorage.getItem('h')}`
-      };
+   obj:any =environment.headers;
 
 
   constructor(private http: HttpClient) { 
     console.log(environment.appUrl);
   }
 
-  getGroups(): Observable<Group[]> {
+  // getGroups(): Observable<Group[]> {
+  //   const headers = new HttpHeaders(this.obj);
+  //   return this.http.get<Group[]>(this.groupsUrl+"api/groups",{headers}).pipe(
+  //       tap(data=>console.log(data)),
+  //       catchError(this.handleError)
+  //     );
+  // }
+
+  getGroups(): Observable<GroupsWithUser> {
     const headers = new HttpHeaders(this.obj);
-    return this.http.get<Group[]>(this.groupsUrl+"api/groups",{headers}).pipe(
+    return this.http.get<GroupsWithUser>(this.groupsUrl+"/users/user/me/groups",{headers}).pipe(
         tap(data=>console.log(data)),
         catchError(this.handleError)
       );
   }
+
+
 
  createGroup(group: Group): Observable<Group> {
     const headers = new HttpHeaders(this.obj);

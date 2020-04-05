@@ -46,21 +46,12 @@
 
 
             <div class="form-group col-md-6 col-sm-12">
-                <button class="btn btn-info" [disabled]="!loginForm.valid" type="submit">Submit</button>
+                <button class="btn btn-info" [disabled]="!loginForm.valid" type="submit">Submit</button>&nbsp;&nbsp;
+                <a class="pull-right" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">or Sign up</a>
             </div>
             <div class="form-group col-md-6 col-sm-12">
               <small>{{infoMessage}}</small>
             </div>
         </form>
-    </div>
-
-    <div class="col-md-12">
-        <hr>
-        <button class="btn btn-outline-primary" [routerLink]="['/']" type="button"> <i class="fa fa-arrow-left"></i>
-            Home </button>
-
-        &nbsp;
-        <a class="btn btn-outline-success" [routerLink]="['/sign-up']" *ngIf="router.url !=='/sign-up'">Sign up</a>
-
     </div>
 </div>

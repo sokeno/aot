@@ -4,7 +4,11 @@
 
 export const environment = {
   appUrl:"http://localhost:8080/",
-  production: false
+  production: false,
+  headers : { 
+      'Content-Type': 'application/json' ,
+      'Authorization' : `Bearer ${localStorage.getItem('h')}`
+      }
 };
 
 /*

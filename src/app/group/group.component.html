@@ -31,11 +31,11 @@
             <td>{{ group.name | titlecase }}</td>
             <td>{{ group.description | titlecase }}</td>
             <td id="action">
-              <button *ngIf="group.user_id !== loggedInUserID" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
+              <button *ngIf="group.createdBy !== user.id" class="btn btn-sm btn-outline-info" (click)="joinGroup(group.id)">Join</button>
               &nbsp;
-              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
+              <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-success" (click)="getGroup(group.id)">Edit</button>
               &nbsp;
-              <button *ngIf="group.user_id == loggedInUserID" class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
+              <button *ngIf="group.createdBy == user.id" class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGroup(group.id)">Delete</button>
             </td>
           </tr>
           <tr *ngIf="groups.length == 0">
@@ -71,7 +71,7 @@
             </span>
         </div>
         <div class="form-group col-md-6 col-sm-12">
-            <label for="description">Desscription</label>
+            <label for="description">Description</label>
             <input type="text" 
                    class="form-control" 
                    formControlName="description" 

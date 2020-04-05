@@ -7,10 +7,12 @@ import { IndexComponent } from './index/index.component';
 import { GroupComponent } from './group/group.component';
 import { UserComponent } from './user/user.component';
 
+import { GroupResolver } from './group/group-resolver.service';
+
 const routes: Routes = [
   {path:'sign-in' , component : SignInComponent},
   {path:'sign-up' , component : SignUpComponent},
-  {path : 'groups' , component :GroupComponent},
+  {path : 'groups' , component :GroupComponent,resolve: { resolvedData: GroupResolver }},
   {path:'users' , component : UserComponent},
   {path:'',component: SignUpComponent , pathMatch: 'full'}
 ];

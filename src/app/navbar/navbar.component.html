@@ -27,6 +27,8 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/sign-up']" *ngIf="(router.url !=='/sign-up' && router.url !=='/' )">Sign Up</a>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logOut()">Log Out</a>
       </li>
     </ul>
   </div>
