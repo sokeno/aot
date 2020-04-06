@@ -1,0 +1,18 @@
+.btn-info.disabled, .btn-info:disabled {
+    color: #fff;
+    background-color: #73c569;
+    border-color: #73c569;
+}
+
+.h2, h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.container {
+    margin-top: 2em;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    background-color: #dee3dd;
+    max-width: 700px;
+}
